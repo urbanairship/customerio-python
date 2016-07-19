@@ -99,7 +99,7 @@ Last caught exception -- {klass}: {message}
     def identify(self, id, **kwargs):
         '''Identify a single customer by their unique id, and optionally add attributes'''
         url = self.get_customer_query_string(id)
-        self.send_request('PUT', url, kwargs)
+        return self.send_request('PUT', url, kwargs)
 
     def track(self, customer_id, name, **data):
         '''Track an event for a given customer_id'''
@@ -108,7 +108,7 @@ Last caught exception -- {klass}: {message}
             'name': name,
             'data': data,
         }
-        self.send_request('POST', url, post_data)
+        return self.send_request('POST', url, post_data)
 
     def pageview(self, customer_id, page, **data):
         '''Track a pageview for a given customer_id'''
@@ -118,7 +118,7 @@ Last caught exception -- {klass}: {message}
             'name': page,
             'data': data,
         }
-        self.send_request('POST', url, post_data)
+        return self.send_request('POST', url, post_data)
 
     def backfill(self, customer_id, name, timestamp, **data):
         '''Backfill an event (track with timestamp) for a given customer_id'''
@@ -138,13 +138,13 @@ Last caught exception -- {klass}: {message}
             'timestamp': timestamp
         }
 
-        self.send_request('POST', url, post_data)
+        return self.send_request('POST', url, post_data)
 
     def delete(self, customer_id):
         '''Delete a customer profile'''
 
         url = self.get_customer_query_string(customer_id)
-        self.send_request('DELETE', url, {})
+        return self.send_request('DELETE', url, {})
 
     def _sanitize(self, data):
         for k, v in data.items():
